@@ -16,7 +16,7 @@
                         </h2>
 
                         <div class="flex-col items-center justify-center text-center">
-                            <a type="button" class="btn btn-primary" href="#">Tambah Jadwal Periksa</a>
+                            <a type="button" class="btn btn-primary" href="{{route('dokter.jadwal-periksa.create')}}">Tambah Jadwal Periksa</a>
                         </div>
                     </header>
 
@@ -32,45 +32,35 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($jadwal_periksas as $jadwal_periksa)
                             <tr>
-                                <th scope="row" class="align-middle text-start">1</th>
-                                <td class="align-middle text-start">Senin</td>
-                                <td class="align-middle text-start">08.00</td>
-                                <td class="align-middle text-start">12.00</td>
+                                <th scope="row" class="align-middle text-start">{{$jadwal_periksa->id}} </th>
+                                <td class="align-middle text-start">{{$jadwal_periksa->hari}} </td>
+                                <td class="align-middle text-start">{{$jadwal_periksa->jam_mulai}} </td>
+                                <td class="align-middle text-start">{{$jadwal_periksa->jam_selesai}} </td>
                                 <td class="align-middle text-start">
-                                    <span class="badge badge-pill badge-success">Aktif</span>
+                                    <span @class([
+                                        'badge badge-pill',
+                                        'badge-success'=>$jadwal_periksa->status,
+                                        'badge-danger'=>!$jadwal_periksa->status,])>
+                                        {{$jadwal_periksa->status ? 'Aktif':'Tidak Aktif'}}
+                                    </span>
                                 </td>
                                 <td class="align-middle text-start">
-                                    <button type="button" class="btn btn-success btn-sm">Aktifkan</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Nonaktifkan</button>
+                                    <form action="{{route('dokter.jadwal-periksa.update', $jadwal_periksa->id)}}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                    <button type="submit" @class([
+                                        'btn',
+                                        'btn-danger'=>$jadwal_periksa->status,
+                                        'btn-success'=>!$jadwal_periksa->status,
+                                        'btn-sm',])>
+                                        {{$jadwal_periksa->status ? 'Nonaktifkan':'Aktifkan'}}</button>
+
+                                    </form>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row" class="align-middle text-start">2</th>
-                                <td class="align-middle text-start">Selasa</td>
-                                <td class="align-middle text-start">13.00</td>
-                                <td class="align-middle text-start">17.00</td>
-                                <td class="align-middle text-start">
-                                    <span class="badge badge-pill badge-danger">Tidak Aktif</span>
-                                </td>
-                                <td class="align-middle text-start">
-                                    <button type="button" class="btn btn-success btn-sm">Aktifkan</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Nonaktifkan</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="align-middle text-start">3</th>
-                                <td class="align-middle text-start">Rabu</td>
-                                <td class="align-middle text-start">09.00</td>
-                                <td class="align-middle text-start">15.00</td>
-                                <td class="align-middle text-start">
-                                    <span class="badge badge-pill badge-success">Aktif</span>
-                                </td>
-                                <td class="align-middle text-start">
-                                    <button type="button" class="btn btn-success btn-sm">Aktifkan</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Nonaktifkan</button>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </section>

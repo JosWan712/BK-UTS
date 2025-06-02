@@ -21,7 +21,9 @@
                             </p>
                         </header>
 
-                        <form class="mt-6" id="formJadwal" action="#" method="POST">
+                        <form class="mt-6" id="formJadwal" action="{{route('dokter.jadwal-periksa.store')}}" method="POST">
+                            @csrf
+
                             <div class="mb-3 form-group">
                                 <label for="hariSelect">Hari</label>
                                 <select class="form-control" name="hari" id="hariSelect">
@@ -46,7 +48,7 @@
                                 <input type="time" class="form-control" id="jamSelesai" name="jam_selesai" value="12:00">
                             </div>
 
-                            <a type="button" href="#" class="btn btn-secondary">
+                            <a type="button" href="{{route('dokter.jadwal-periksa.index')}}" class="btn btn-secondary">
                                 Batal
                             </a>
                             <button type="submit" class="btn btn-primary">
