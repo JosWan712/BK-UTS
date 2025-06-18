@@ -21,6 +21,7 @@
                         </header>
 
                         <form class="mt-6" id="formJadwal" action="#" method="POST">
+                            @csrf
                             <div class="mb-3 form-group">
                                 <label for="hariSelect">Hari</label>
                                 <select class="form-control" name="hari" id="hariSelect" required>
