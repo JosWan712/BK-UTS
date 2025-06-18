@@ -73,6 +73,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/', [JanjiPeriksaController::class, 'store'])->name('pasien.janji-periksa.store');
         });
     });
+    Route::middleware(['role:pasien'])->prefix('pasien')->group(function () {
+        Route::get('/', function () {
+            return view('pasien.dashboard');
+        })->name('pasien.dashboard');
+        Route::prefix('janji-periksa')->group(function () {
+            Route::get('/', [JanjiPeriksaController::class, 'index'])->name('pasien.janji-periksa.index');
+            Route::get('/create', [JanjiPeriksaController::class, 'create'])->name('pasien.janji-periksa.create');
+            Route::post('/store', [JanjiPeriksaController::class, 'store'])->name('pasien.janji-periksa.store');
+        });
+    });
 });
 
 require __DIR__.'/auth.php';
