@@ -26,6 +26,7 @@ class PasienSeeder extends Seeder
             'no_hp' => '081234567890',
             'no_ktp' => '3175010101900001',
             'no_rm' => $no_rm,
+            'id_poli' => '1',
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\pasien;
 
 use App\Models\JanjiPeriksa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,11 +11,11 @@ class RiwayatPeriksaController extends Controller
 {
     public function index()
     {
-        $janjiPeriksa = JanjiPeriksa::where('id_pasien', auth()->user()->id)
+        $janjiPeriksas = JanjiPeriksa::where('id_pasien', Auth::user()->id)
             ->get();
 
         return view('pasien.riwayat-periksa.index')->with([
-            'janjiPeriksa' => $janjiPeriksa,
+            'janjiPeriksas' => $janjiPeriksas,
         ]);
     }
 

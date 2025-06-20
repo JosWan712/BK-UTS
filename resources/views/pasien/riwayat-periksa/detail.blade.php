@@ -26,31 +26,31 @@
                                         <div class="px-4 py-3 mb-2 border-0 rounded list-group-item bg-light">
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-gray-700">Poliklinik</span>
-                                                <span class="font-medium">Umum</span>
+                                                <span class="font-medium">{{$janjiPeriksa->jadwalPeriksa->dokter->poli}}</span>
                                             </div>
                                         </div>
                                         <div class="px-4 py-3 mb-2 border-0 rounded list-group-item bg-light">
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-gray-700">Nama Dokter</span>
-                                                <span class="font-medium">Dr. Ahmad</span>
+                                                <span class="font-medium">{{$janjiPeriksa->jadwalPeriksa->dokter->nama}}</span>
                                             </div>
                                         </div>
                                         <div class="px-4 py-3 mb-2 border-0 rounded list-group-item bg-light">
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-gray-700">Hari Pemeriksaan</span>
-                                                <span class="font-medium">Senin</span>
+                                                <span class="font-medium">{{$janjiPeriksa->jadwalPeriksa->hari}}</span>
                                             </div>
                                         </div>
                                         <div class="px-4 py-3 mb-2 border-0 rounded list-group-item bg-light">
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-gray-700">Jam Mulai</span>
-                                                <span class="font-medium">08.00</span>
+                                                <span class="font-medium">{{\Carbon\Carbon::parse($janjiPeriksa->jadwalPeriksa->jam_mulai)}}</span>
                                             </div>
                                         </div>
                                         <div class="px-4 py-3 mb-2 border-0 rounded list-group-item bg-light">
                                             <div class="d-flex justify-content-between">
                                                 <span class="text-gray-700">Jam Selesai</span>
-                                                <span class="font-medium">10.00</span>
+                                                <span class="font-medium">{{\Carbon\Carbon::parse($janjiPeriksa->jadwalPeriksa->jam_selesai)}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                                     <div class="p-4 rounded bg-light h-100 d-flex flex-column align-items-center justify-content-center">
                                         <h5 class="mb-3 text-gray-700">Nomor Antrian Anda</h5>
                                         <div class="text-white rounded-lg bg-primary d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
-                                            <span class="font-bold" style="font-size: 2.5rem;">5</span>
+                                            <span class="font-bold" style="font-size: 2.5rem;">{{$janjiPeriksa->no_antrian}}</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <a href="#" class="btn btn-secondary">
+                        <a href="{{route('pasien.riwayat-periksa.index')}}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i> Kembali
                         </a>
                     </div>

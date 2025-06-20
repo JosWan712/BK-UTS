@@ -15,12 +15,28 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(Auth::user()->role == 'dokter')
                     <x-nav-link :href="route('dokter.obat.index')" :active="request()->routeIs('obat')">
                         {{ __('Obat') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dokter.obat.indexDeleted')" :active="request()->routeIs('obat terhapus')">
+                        {{ __('Obat Terhapus') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dokter.jadwal-periksa.index')" :active="request()->routeIs('jadwal periksa')">
                         {{ __('Jadwal Periksa') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('dokter.memeriksa.index')" :active="request()->routeIs('memeriksa')">
+                        {{ __('Periksa Pasien') }}
+                    </x-nav-link>
+                    @else
+                    <x-nav-link :href="route('pasien.janji-periksa.index')" :active="request()->routeIs('janji periksa')">
+                        {{ __('Daftar Poliklinik') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pasien.riwayat-periksa.index')" :active="request()->routeIs('riwayat periksa')">
+                        {{ __('Riwayat Periksa') }}
+                    </x-nav-link>
+
+                    @endif
                 </div>
             </div>
 

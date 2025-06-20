@@ -13,17 +13,10 @@
                         {{ __('Daftar Jadwal Periksa') }}
                     </h2>
 
-<<<<<<< HEAD
-                    <div class="flex-col items-center justify-center text-center">
-                        <a type="button" class="btn btn-primary"
-                            href="{{ route('dokter.jadwal-periksa.create') }}">Tambah
-                            Jadwal Periksa</a>
-=======
                         <div class="flex-col items-center justify-center text-center">
                             <a type="button" class="btn btn-primary" href="{{route('dokter.jadwal-periksa.create')}}">Tambah Jadwal Periksa</a>
                         </div>
                     </header>
->>>>>>> 7ecf533 (Joshua Jadwal Periksa)
 
                         @if (session('status') === 'jadwal-periksa-created')
                             <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
@@ -48,41 +41,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jadwalPeriksas as $jadwalPeriksa)
+
+
+                            @foreach ($jadwalPeriksas as $jadwalPeriksa)
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Hari</th>
-                                <th scope="col">Mulai</th>
-                                <th scope="col">Selesai</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($jadwal_periksas as $jadwal_periksa)
-                            <tr>
-                                <th scope="row" class="align-middle text-start">{{$jadwal_periksa->id}} </th>
-                                <td class="align-middle text-start">{{$jadwal_periksa->hari}} </td>
-                                <td class="align-middle text-start">{{$jadwal_periksa->jam_mulai}} </td>
-                                <td class="align-middle text-start">{{$jadwal_periksa->jam_selesai}} </td>
+                                <th scope="row" class="align-middle text-start">{{$jadwalPeriksa->id}} </th>
+                                <td class="align-middle text-start">{{$jadwalPeriksa->hari}} </td>
+                                <td class="align-middle text-start">{{$jadwalPeriksa->jam_mulai}} </td>
+                                <td class="align-middle text-start">{{$jadwalPeriksa->jam_selesai}} </td>
                                 <td class="align-middle text-start">
                                     <span @class([
                                         'badge badge-pill',
-                                        'badge-success'=>$jadwal_periksa->status,
-                                        'badge-danger'=>!$jadwal_periksa->status,])>
-                                        {{$jadwal_periksa->status ? 'Aktif':'Tidak Aktif'}}
+                                        'badge-success'=>$jadwalPeriksa->status,
+                                        'badge-danger'=>!$jadwalPeriksa->status,])>
+                                        {{$jadwalPeriksa->status ? 'Aktif':'Tidak Aktif'}}
                                     </span>
                                 </td>
                                 <td class="align-middle text-start">
-                                    <form action="{{route('dokter.jadwal-periksa.update', $jadwal_periksa->id)}}" method="POST">
+                                    <form action="{{route('dokter.jadwal-periksa.update', $jadwalPeriksa->id)}}" method="POST">
                                         @csrf
                                         @method('PUT')
                                     <button type="submit" @class([
                                         'btn',
-                                        'btn-danger'=>$jadwal_periksa->status,
-                                        'btn-success'=>!$jadwal_periksa->status,
+                                        'btn-danger'=>$jadwalPeriksa->status,
+                                        'btn-success'=>!$jadwalPeriksa->status,
                                         'btn-sm',])>
-                                        {{$jadwal_periksa->status ? 'Nonaktifkan':'Aktifkan'}}</button>
+                                        {{$jadwalPeriksa->status ? 'Nonaktifkan':'Aktifkan'}}</button>
 
                                     </form>
                                 </td>

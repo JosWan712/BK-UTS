@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Poli;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -16,9 +18,14 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $polis = Poli::all();
+
         return view('profile.edit', [
+            'polis'=> $polis,
             'user' => $request->user(),
+
         ]);
+
     }
 
     /**

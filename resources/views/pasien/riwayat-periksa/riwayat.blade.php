@@ -28,7 +28,7 @@
                                     <div class="mb-3">
                                         <label class="font-semibold text-gray-700 form-label">Tanggal Periksa</label>
                                         <div class="form-control-plaintext">
-                                            10 Juni 2025 14.30
+                                            {{\Carbon\Carbon::parse($janjiPeriksa->periksa->tgl_periksa)->translatedFormat('d F Y H.i')}}
                                         </div>
                                     </div>
                                 </div>
@@ -36,7 +36,7 @@
                                     <div class="mb-3">
                                         <label class="font-semibold text-gray-700 form-label">Catatan</label>
                                         <div class="form-control-plaintext">
-                                            Pasien disarankan istirahat penuh.
+                                            {{$janjiPeriksa->periksa->catatan ?? 'Tidak ada catatan'}}
                                         </div>
                                     </div>
                                 </div>
@@ -50,14 +50,12 @@
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
+                                @foreach ($janjiPeriksa->periksa->detailPeriksas as $detailPeriksa)
                                 <li class="px-0 list-group-item d-flex justify-content-between align-items-center border-bottom">
-                                    <span>Paracetamol</span>
-                                    <span class="badge bg-light text-dark">10 tablet</span>
+                                    <span>{{$detailPeriksa->obat->nama_obat}}</span>
+                                    <span class="badge bg-light text-dark">{{$detailPeriksa->obat->kemasan}}</span>
                                 </li>
-                                <li class="px-0 list-group-item d-flex justify-content-between align-items-center border-bottom">
-                                    <span>Amoxicillin</span>
-                                    <span class="badge bg-light text-dark">5 tablet</span>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -67,14 +65,14 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="font-semibold text-gray-800 fw-bold">Biaya Periksa</span>
                                 <span class="fw-bold fs-5 text-primary">
-                                    Rp150.000
+                                    {{'Rp ' . number_format($janjiPeriksa->periksa->biaya_periksa, 0, ',', '.')}}
                                 </span>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <a href="#" class="btn btn-secondary">
+                        <a href="{{route('pasien.riwayat-periksa.index')}}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i> Kembali
                         </a>
                     </div>

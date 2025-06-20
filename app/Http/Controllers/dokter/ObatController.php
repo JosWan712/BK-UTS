@@ -2,60 +2,90 @@
 
 namespace App\Http\Controllers\Dokter;
 
+use App\Http\Controllers\Controller;
 use App\Models\Obat;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
+
 
 class ObatController extends Controller
 {
     public function index()
     {
         $obats = Obat::all();
-        return view('dokter.obat.index', compact('obats'));
+
+        return view('dokter.obat.index')->with([
+            'obats' => $obats,
+        ]);
     }
 
-    public function create()
-    {
+    public function create(){
         return view('dokter.obat.create');
+    }
+
+    public function edit($id)
+    {
+        $obat = Obat::find($id);
+
+        return view('dokter.obat.edit')->with([
+            'obat' => $obat,
+        ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_obat' => 'required|string|max:255',
+            'kemasan' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+        ]);
+
         Obat::create([
             'nama_obat' => $request->nama_obat,
             'kemasan' => $request->kemasan,
             'harga' => $request->harga,
         ]);
 
-        return redirect()->route('dokter.obat.index');
+        return redirect()->route('dokter.obat.index')->with('status', 'obat-created');
     }
 
-    public function edit($id)
-    {
-        $obat = Obat::findOrFail($id);
-        return view('dokter.obat.edit', compact('obat'));
-    }
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nama_obat' => 'required|string|max:255',
+            'kemasan' => 'required|string|max:255',
+            'harga' => 'required|numeric|min:0',
+        ]);
 
-    public function update(Request $request, $id)
-    {
-        $obat = Obat::findOrFail($id);
+        $obat = Obat::find($id);
         $obat->update([
             'nama_obat' => $request->nama_obat,
             'kemasan' => $request->kemasan,
             'harga' => $request->harga,
         ]);
 
-        return redirect()->route('dokter.obat.index');
+        return redirect()->route('dokter.obat.index')->with('status', 'obat-updated');
     }
 
     public function destroy($id)
     {
-        $obat = Obat::findOrFail($id);
+        $obat = Obat::find($id);
         $obat->delete();
 
         return redirect()->route('dokter.obat.index');
     }
+
+    public function restore($id){
+        $obat = Obat::withTrashed()->where('id', $id)->restore();
+
+
+        return redirect()->route('dokter.obat.index');
+    }
+    public function indexDeleted()
+    {
+        $obats = Obat::withTrashed()->whereNotNull('deleted_at')->get();
+
+        return view('dokter.obat.indexDeleted')->with([
+            'obats' => $obats,
+        ]);
+    }
+
 }

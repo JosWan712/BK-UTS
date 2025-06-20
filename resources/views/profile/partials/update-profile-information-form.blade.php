@@ -13,14 +13,14 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('dokter.profile.update') }}" class="mt-6 space-y-6">
         @csrf
-        @method('patch')
+        @method('PATCH')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="nama" :value="__('Name')" />
+            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full" :value="old('nama', $user->nama)" required autofocus autocomplete="nama" />
+            <x-input-error class="mt-2" :messages="$errors->get('nama')" />
         </div>
 
         <div>
@@ -28,7 +28,8 @@
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                @if ($user instanceof \App\Models\User && $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+
                 <div>
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
@@ -46,6 +47,15 @@
                 </div>
             @endif
         </div>
+        @if(Auth::user()->role == 'dokter')
+        <div>
+            <select class="form-control" name="id_poli" id="poliSelect" required>
+                @foreach ($polis as $poli)
+
+                    <option value="{{$poli->id }}" {{ $user->id_poli == $poli->id ? 'selected' : '' }}>{{$poli->nama}}</option>
+                @endforeach
+        </div>
+        @endif
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

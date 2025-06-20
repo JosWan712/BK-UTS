@@ -31,40 +31,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Dummy Row 1 -->
+                            @foreach($janjiPeriksas as $janjiPeriksa)
                             <tr>
-                                <th scope="row" class="align-middle text-start">1</th>
-                                <td class="align-middle text-start">Umum</td>
-                                <td class="align-middle text-start">Dr. Ahmad</td>
-                                <td class="align-middle text-start">Senin</td>
-                                <td class="align-middle text-start">08.00</td>
-                                <td class="align-middle text-start">10.00</td>
-                                <td class="align-middle text-start">5</td>
+                                <th scope="row" class="align-middle text-start">{{$loop->iteration}}</th>
+                                <td class="align-middle text-start">{{$janjiPeriksa->jadwalPeriksa->dokter->poli}} </td>
+                                <td class="align-middle text-start">{{$janjiPeriksa->jadwalPeriksa->dokter->nama}}</td>
+                                <td class="align-middle text-start">{{$janjiPeriksa->jadwalPeriksa->hari}}</td>
+                                <td class="align-middle text-start">{{\Carbon\Carbon::parse($janjiPeriksa->jadwalPeriksa->jam_mulai)->format('H.i')}}</td>
+                                <td class="align-middle text-start">{{\Carbon\Carbon::parse($janjiPeriksa->jadwalPeriksa->jam_selesai)->format('H.i')}}</td>
+                                <td class="align-middle text-start">{{$janjiPeriksa->no_antrian}}</td>
                                 <td class="align-middle text-start">
-                                    <span class="badge badge-pill badge-warning">Belum Diperiksa</span>
+                                    <span @class([
+                                        'badge badge-pill',
+                                        'badge-warning'=>is_null($janjiPeriksa->periksa),
+                                        'badge-success'=>!is_null($janjiPeriksa->periksa)
+                                        ])>{{$janjiPeriksa->periksa ? 'Sudah Diperiksa':'Belum Diperiksa'}}</span>
                                 </td>
                                 <td class="align-middle text-start">
-                                    <a href="#" class="btn btn-info">Detail</a>
+                                    @if(is_null($janjiPeriksa->periksa))
+                                        <a href="{{route('pasien.riwayat-periksa.detail', $janjiPeriksa->id)}} " class="btn btn-primary">Detail</a>
+                                    @else
+                                        <a href="{{route('pasien.riwayat-periksa.riwayat', $janjiPeriksa->id)}} " class="btn btn-secondary">Riwayat</a>
+                                    @endif
+
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
+                            <!-- Dummy Row 1 -->
 
-                            <!-- Dummy Row 2 -->
-                            <tr>
-                                <th scope="row" class="align-middle text-start">2</th>
-                                <td class="align-middle text-start">Gigi</td>
-                                <td class="align-middle text-start">Dr. Sari</td>
-                                <td class="align-middle text-start">Rabu</td>
-                                <td class="align-middle text-start">14.00</td>
-                                <td class="align-middle text-start">16.00</td>
-                                <td class="align-middle text-start">3</td>
-                                <td class="align-middle text-start">
-                                    <span class="badge badge-pill badge-success">Sudah Diperiksa</span>
-                                </td>
-                                <td class="align-middle text-start">
-                                    <a href="#" class="btn btn-secondary">Riwayat</a>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </section>
