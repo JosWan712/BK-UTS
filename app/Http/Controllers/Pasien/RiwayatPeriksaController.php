@@ -18,6 +18,15 @@ class RiwayatPeriksaController extends Controller
             'janjiPeriksas' => $janjiPeriksas,
         ]);
     }
+    public function dashboard()
+    {
+        $janjiPeriksas = JanjiPeriksa::where('id_pasien', Auth::user()->id)
+            ->get();
+
+        return view('pasien.riwayat-periksa.index')->with([
+            'janjiPeriksas' => $janjiPeriksas,
+        ]);
+    }
 
     public function detail($id)
     {

@@ -68,9 +68,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::middleware(['role:pasien'])->prefix('pasien')->group(function () {
-        Route::get('/', function () {
-            return view('pasien.dashboard');
-        })->name('pasien.dashboard');
+        Route::get('/', [RiwayatPeriksaController::class,'dashboard'])->name('pasien.dashboard');
+
         Route::prefix('janji-periksa')->group(function () {
             Route::get('/', [JanjiPeriksaController::class, 'index'])->name('pasien.janji-periksa.index');
             Route::get('/create', [JanjiPeriksaController::class, 'create'])->name('pasien.janji-periksa.create');
