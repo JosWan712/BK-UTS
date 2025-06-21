@@ -32,8 +32,10 @@
                         </thead>
                         <tbody>
                             @foreach($janjiPeriksas as $janjiPeriksa)
+                            <?php $i = 0;?>
+                            @if(!is_null($janjiPeriksa->periksa))
                             <tr>
-                                <th scope="row" class="align-middle text-start">{{$loop->iteration}}</th>
+                                <th scope="row" class="align-middle text-start">{{$i++}}</th>
                                 <td class="align-middle text-start">{{$janjiPeriksa->jadwalPeriksa->dokter->poli}} </td>
                                 <td class="align-middle text-start">{{$janjiPeriksa->jadwalPeriksa->dokter->nama}}</td>
                                 <td class="align-middle text-start">{{$janjiPeriksa->jadwalPeriksa->hari}}</td>
@@ -57,6 +59,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endif
                             @endforeach
                             <!-- Dummy Row 1 -->
 
